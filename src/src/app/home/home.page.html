@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <p *ngIf="userDisplayName">Bienvenido, {{ userDisplayName }}!</p>
+  <ion-button *ngIf="!!!userDisplayName" expand="block" color="primary" (click)="loginWithGoogle()">
+    <ion-icon name="logo-google" slot="start"></ion-icon>
+    Iniciar sesión con Google
+  </ion-button>
+</ion-content>

@@ -20,8 +20,24 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'account',
+        loadChildren: () => import('../account/account.module').then( m => m.AccountPageModule)
+      },
+      {
+        path: 'shift',
+        loadChildren: () => import('../shift/shift.module').then( m => m.ShiftPageModule)
+      },
+      {
+        path: 'volunteers',
+        loadChildren: () => import('../volunteers/volunteers.module').then( m => m.VolunteersPageModule)
+      },
+      {
+        path: 'boxes',
+        loadChildren: () => import('../boxes/boxes.module').then( m => m.BoxesPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/shift',
         pathMatch: 'full'
       }
     ]

@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cajas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Cajas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list>
+      <ng-container *ngIf="(boxes$ | async) as boxes">
+        <ion-item *ngFor="let box of boxes" (click)="openEditBoxModal(box)">
+          <ion-badge *ngIf="box.shiftType === 'full'" color="success" slot="end">Dia entero</ion-badge>
+          <ion-label>
+            Caja Número: {{ box.number }}
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="boxes.length === 0">
+          <ion-label>No hay cajas por el momento</ion-label>
+        </ion-item>
+      </ng-container>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openAddBoxModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
