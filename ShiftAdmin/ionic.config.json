@@ -1,0 +1,7 @@
+{
+  "name": "ShiftAdmin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
