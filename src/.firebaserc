@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "shiftadmin": "prueba-af938"
+  },
+  "targets": {
+    "prueba-af938": {
+      "hosting": {
+        "site": "prueba-af938",
+        "public": "www"
+      }
+    }
+  },
+  "etags": {}
+}
