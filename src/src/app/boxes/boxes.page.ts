@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { addDoc, collection, collectionData, CollectionReference, deleteDoc, updateDoc, doc, DocumentReference, Firestore } from '@angular/fire/firestore';
+import { 
+  addDoc, 
+  collection, 
+  collectionData, 
+  CollectionReference, 
+  deleteDoc, 
+  updateDoc, 
+  doc, 
+  DocumentReference, 
+  Firestore 
+} from '@angular/fire/firestore';
 import { Box } from '../models/box.model';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AddBoxModalComponent } from './add-box-modal.component';
 import { EditBoxModalComponent } from './edit-box-modal.component';
 
@@ -22,7 +33,12 @@ export class BoxesPage implements OnInit {
       this.boxesCollection = collection(this.firestore, 'boxes');
 
       // get documents (data) from the collection using collectionData
-      this.boxes$ = collectionData(this.boxesCollection,{ idField: 'id' }) as Observable<Box[]>;
+      this.boxes$ = (collectionData(this.boxesCollection, { idField: 'id' }) as Observable<Box[]>).pipe(
+        catchError(err => {
+          console.error('Error loading boxes:', err);
+          return of([]);
+        })
+      );
   }  
 
   ngOnInit() {
@@ -36,9 +52,9 @@ export class BoxesPage implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data && data.number) {
-      addDoc(this.boxesCollection, { number: data.number }).then((documentReference: DocumentReference) => {
+      addDoc(this.boxesCollection, { number: data.number, shiftType: data.shiftType }).then((documentReference: DocumentReference) => {
         console.log('Document added: ', documentReference);
-      });
+      }).catch(err => console.error('Error adding document:', err));
     }
   }
   
@@ -55,7 +71,7 @@ export class BoxesPage implements OnInit {
       if (data.action === 'edit' && data.number !== undefined && box.id) {
         // Actualizar el box en Firestore
         const boxDocRef = doc(this.firestore, `boxes/${box.id}`);
-        updateDoc(boxDocRef, { number: data.number });
+        updateDoc(boxDocRef, { number: data.number, shiftType: data.shiftType }).catch(err => console.error('Error updating document:', err));
       } else if (data.action === 'delete' && box.id) {
         // Eliminar el box en Firestore
         const boxDocRef = doc(this.firestore, `boxes/${box.id}`);

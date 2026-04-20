@@ -19,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'boxes',
-    loadChildren: () => import('./boxes/boxes.module').then( m => m.BoxesPageModule)
+    loadChildren: () => import('./boxes/boxes.module').then( m => m.BoxesPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 @NgModule({
